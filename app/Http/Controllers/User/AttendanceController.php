@@ -44,7 +44,7 @@ class AttendanceController extends Controller
         
         if ($attendance !== null && $attendance->clock_out !== null) {
             return response()->json([
-                'message' => 'You have not clocked in today'
+                'message' => 'You have already clocked out today'
             ],400);
         }
 
