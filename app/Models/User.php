@@ -47,4 +47,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(VerifyToken::class);
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
 }
