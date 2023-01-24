@@ -75,7 +75,7 @@ class RegisterController extends Controller
         VerifyTokenService::createToken($user, 'verify_account');
 
         return response()->json([
-            'message' => 'Registered successfully'
+            'message' => 'Registered successfully, please check your email to verify your account'
         ]);
     }
 }
