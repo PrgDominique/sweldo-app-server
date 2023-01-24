@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Utils\ValidationUtil;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -51,8 +53,29 @@ class RegisterController extends Controller
             ], 400);
         }
 
+        
+        
+
+
+
         // TODO: Check if email already exist
+
+        $result = User::where('email', $email)->first();
+        if ($result != null) {
+            return response()->json([
+                'message' => 'Email already exist',
+                'type' => 'email'
+            ], 400);
+        }
+
         // TODO: Create new user
+
+        User::create([
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => $email,
+            'password' => Hash::make($password)
+        ]);
 
         return response()->json([
             'message' => 'Registered successfully'
