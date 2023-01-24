@@ -24,6 +24,6 @@ class UserDashboardController extends Controller
         return response()->json([
             'message' => 'Sample response',
             'isClockIn' => $isClockIn,
-        ], 200);
+        ]);
     }
 }
