@@ -58,7 +58,7 @@ class RegisterController extends Controller
 
 
 
-        // TODO: Check if email already exist
+        // Check if email already exist
 
         $result = User::where('email', $email)->first();
         if ($result != null) {
@@ -68,7 +68,7 @@ class RegisterController extends Controller
             ], 400);
         }
 
-        // TODO: Create new user
+        // Create new user
 
         User::create([
             'first_name' => $first_name,

@@ -49,7 +49,7 @@ class LoginController extends Controller
         // Get authenticated user
         $user = $request->user();
 
-        // TODO: Check if verified email
+        // Check if verified email
         if ($user->email_verified_at == null) {
             return response()->json([
                 'message' => 'Please verify your email first.',
