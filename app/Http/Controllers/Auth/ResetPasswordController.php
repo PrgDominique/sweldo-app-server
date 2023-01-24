@@ -52,7 +52,7 @@ class ResetPasswordController extends Controller
         }
 
         // Get verify token
-        $verifyToken = $user->verify_token->where('type', 'reset_password')->first();
+        $verifyToken = $user->verify_token->where('type', 'reset_password')->last();
 
         // Token not found
         if ($verifyToken == null) {

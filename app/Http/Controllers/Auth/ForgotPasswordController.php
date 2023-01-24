@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\VerifyTokenService;
 use App\Utils\ValidationUtil;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,8 @@ class ForgotPasswordController extends Controller
             ], 400);
         }
 
-        // TODO: Send email
+        // Send email
+        VerifyTokenService::createToken($user, 'reset_password');
 
         return response()->json([
             'message' => 'Check your email for a link to reset your password'

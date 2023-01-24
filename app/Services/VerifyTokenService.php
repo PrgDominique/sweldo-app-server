@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Mail\ForgotPasswordMail;
 use App\Models\User;
 use App\Models\VerifyToken;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class VerifyTokenService
@@ -11,17 +13,18 @@ class VerifyTokenService
     public static function createToken(User $user, string $type)
     {
         $token = self::generateToken();
-        $verifyToken = $user->verify_token->create([
+        $user->verify_token()->create([
             'type' => $type,
             'token' => $token
         ]);
         if ($type == 'verify_account') {
-            $link = 'https://project-3-lms.vercel.app/verify/account?id=' . $user->id . '&?token=' . $verifyToken;
-            // TODO: Send email
+            $link = 'http://localhost:3000/verify/account?id=' . $user->id . '&token=' . $token;
+            // TODO: Send verify account email
+            // Mail::to($user->email)->send(new ForgotPasswordMail($link));
         }
         if ($type == 'reset_password') {
-            $link = 'https://project-3-lms.vercel.app/reset-password?id=' . $user->id . '&?token=' . $verifyToken;
-            // TODO: Send email
+            $link = 'http://localhost:3000/reset-password?id=' . $user->id . '&token=' . $token;
+            Mail::to($user->email)->send(new ForgotPasswordMail($link));
         }
     }
 
