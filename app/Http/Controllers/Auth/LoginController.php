@@ -56,12 +56,18 @@ class LoginController extends Controller
             ], 400);
         }
 
-        // TODO: Create access token (install ko pa later yung dependencies)
+        // Create token
+        $accessToken = $user->createToken('Personal Access Token')->accessToken;
 
         // TODO: Return specific user data and access token
         return response()->json([
             'message' => 'Login successfully',
-            'user' => []
+            'user' => [
+                'id' => $user->id,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'access_token' => $accessToken->token,
+            ]
         ]);
     }
 }
