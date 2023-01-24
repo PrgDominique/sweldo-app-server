@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Utils\ValidationUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +50,14 @@ class LoginController extends Controller
         $user = $request->user();
 
         // TODO: Check if verified email
+        if ($user->email_verified_at == null) {
+            return response()->json([
+                'message' => 'Please verify your email first.',
+            ], 400);
+        }
+
         // TODO: Create access token (install ko pa later yung dependencies)
-        
+
         // TODO: Return specific user data and access token
         return response()->json([
             'message' => 'Login successfully',
