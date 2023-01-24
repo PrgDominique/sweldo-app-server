@@ -56,7 +56,7 @@ class LoginController extends Controller
             ], 400);
         }
 
-        // Create token
+        // Create access token
         $accessToken = $user->createToken('Personal Access Token')->accessToken;
 
         // Return user data and access token
@@ -67,7 +67,7 @@ class LoginController extends Controller
                 'first_name' => $user->first_name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,
-                'access_token' => $accessToken->token,
+                'access_token' => $accessToken,
             ]
         ]);
     }

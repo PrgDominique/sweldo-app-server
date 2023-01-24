@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Verify\VerifyAccountController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +32,15 @@ Route::post('/reset-password', [ResetPasswordController::class, 'update']);
 
 // Verify
 Route::post('/verify/account', [VerifyAccountController::class, 'verify']);
+
+/*
+    Authenticated routes
+*/
+Route::group([
+    'prefix' => '/dashboard',
+    'middleware' => [
+        'auth:api',
+    ]
+], function () {
+    Route::get('/', [UserDashboardController::class, 'index']);
+});
