@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\ForgotPasswordMail;
+use App\Mail\VerifyAccountMail;
 use App\Models\User;
 use App\Models\VerifyToken;
 use Illuminate\Support\Facades\Mail;
@@ -19,8 +20,7 @@ class VerifyTokenService
         ]);
         if ($type == 'verify_account') {
             $link = 'http://localhost:3000/verify/account?id=' . $user->id . '&token=' . $token;
-            // TODO: Send verify account email
-            // Mail::to($user->email)->send(new ForgotPasswordMail($link));
+            Mail::to($user->email)->send(new VerifyAccountMail($link));
         }
         if ($type == 'reset_password') {
             $link = 'http://localhost:3000/reset-password?id=' . $user->id . '&token=' . $token;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\VerifyTokenService;
 use App\Utils\ValidationUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -53,15 +54,9 @@ class RegisterController extends Controller
             ], 400);
         }
 
-        
-        
-
-
-
         // Check if email already exist
-
-        $result = User::where('email', $email)->first();
-        if ($result != null) {
+        $user = User::where('email', $email)->first();
+        if ($user != null) {
             return response()->json([
                 'message' => 'Email already exist',
                 'type' => 'email'
@@ -69,13 +64,15 @@ class RegisterController extends Controller
         }
 
         // Create new user
-
-        User::create([
+        $user = User::create([
             'first_name' => $first_name,
             'last_name' => $last_name,
             'email' => $email,
             'password' => Hash::make($password)
         ]);
+
+        // Send email
+        VerifyTokenService::createToken($user, 'verify_account');
 
         return response()->json([
             'message' => 'Registered successfully'
