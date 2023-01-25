@@ -37,7 +37,8 @@ Route::group([
     // Clock in and out
     Route::post('/clock-in', [AttendanceController::class, 'clockIn']);
     Route::post('/clock-out', [AttendanceController::class, 'clockOut']);
-
+    // fetch announcement from database
+    Route::get('/announcements', [AnnouncementController::class, 'index']);
 });
 
 Route::group([
