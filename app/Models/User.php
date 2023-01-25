@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Deduction::class);
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
