@@ -82,4 +82,15 @@ class ValidationUtil
         }
         return null;
     }
+
+    public static function validateTimestamp(string $value = null)
+    {
+        if (empty($value)) {
+            return 'Invalid id';
+        }
+        if (!is_numeric($value)) {
+            return 'Invalid id';
+        }
+        return null;
+    }
 }

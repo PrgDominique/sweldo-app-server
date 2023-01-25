@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Utils\ValidationUtil;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
@@ -15,7 +17,22 @@ class CalendarController extends Controller
 
     public function getTasks(Request $request)
     {
-        // TODO: Return all task by dates
+        $timestamp = $request->date;
+
+        // Validate date
+        $result = ValidationUtil::validateTimestamp($timestamp);
+        if ($result != null) {
+            return response()->json([
+                'message' => $result,
+            ], 400);
+        }
+
+        // Get all task by dates
+        $tasks = $request->user()->tasks()->where('date', Carbon::createFromTimestamp($timestamp)->addDay(1)->toDateString())->get();
+
+        return response()->json([
+            'tasks' => $tasks
+        ]);
     }
 
     public function store(Request $request)
