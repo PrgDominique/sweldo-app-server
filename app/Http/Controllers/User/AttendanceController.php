@@ -52,7 +52,7 @@ class AttendanceController extends Controller
             'clock_out' => now(),
         ]);
         return response()->json([
-            'message' => 'You have clocked in successfully'
+            'message' => 'You have clocked out successfully'
         ]);
 
     }
