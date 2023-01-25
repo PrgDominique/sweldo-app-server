@@ -53,4 +53,13 @@ class User extends Authenticatable
         return $this->hasMany(Attendance::class);
     }
 
+    public function rate()
+    {
+        return $this->hasOne(Rate::class);
+    }
+
+    public function deduction()
+    {
+        return $this->hasOne(Deduction::class);
+    }
 }
