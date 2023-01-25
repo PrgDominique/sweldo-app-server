@@ -19,7 +19,9 @@ class Admin
     {
         // Check if not logged in
         if (!Auth::check()) {
-            abort(404);
+            abort(response()->json([
+                'message' => 'Please login.',
+            ], 401));
         }
 
         // Check if not admin
