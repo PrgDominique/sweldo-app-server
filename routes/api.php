@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\User\AnnouncementController;
 use App\Http\Controllers\User\AttendanceController;
 use App\Http\Controllers\User\CalendarController;
 use App\Http\Controllers\User\MySweldoController;
@@ -38,7 +39,6 @@ Route::group([
     Route::post('/clock-in', [AttendanceController::class, 'clockIn']);
     Route::post('/clock-out', [AttendanceController::class, 'clockOut']);
     // fetch announcement from database
-    Route::get('/announcements', [AnnouncementController::class, 'index']);
 });
 
 Route::group([
