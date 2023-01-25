@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\User\AttendanceController;
+use App\Http\Controllers\User\CalendarController;
 use App\Http\Controllers\User\MySweldoController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Verify\VerifyAccountController;
@@ -36,6 +37,19 @@ Route::group([
     // Clock in and out
     Route::post('/clock-in', [AttendanceController::class, 'clockIn']);
     Route::post('/clock-out', [AttendanceController::class, 'clockOut']);
+
+});
+
+Route::group([
+    'prefix' => '/calendar',
+    'middleware' => [
+        'auth:api',
+    ]
+], function () {
+    Route::get('/', [CalendarController::class, 'index']);
+    Route::get('/task/{date}', [CalendarController::class, 'getTasks']);
+    // TODO: Create task
+    // TODO: Delete task
 
 });
 
