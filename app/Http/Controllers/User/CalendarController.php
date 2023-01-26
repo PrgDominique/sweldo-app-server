@@ -12,7 +12,24 @@ class CalendarController extends Controller
 
     public function index(Request $request)
     {
-        // TODO: Return all dates that have tasks by month
+        $tasks = $request->user()->tasks()->whereBetween(
+            'created_at',
+            [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]
+        )->get();
+
+        $taskList = [];
+        foreach ($tasks as $task) {
+            $day = Carbon::parse($task->created_at)->rawFormat('d');
+            if (isset($taskList[$day])) {
+                $taskList[$day]++;
+            } else {
+                $taskList[$day] = 1;
+            }
+        }
+
+        return response()->json([
+            'tasks' => $taskList
+        ]);
     }
 
     public function getTasks(Request $request)
