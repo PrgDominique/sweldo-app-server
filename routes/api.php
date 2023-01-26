@@ -50,7 +50,7 @@ Route::group([
     Route::get('/task/monthly/{date}', [CalendarController::class, 'getMonthlyTasks']);
     Route::get('/task/daily/{date}', [CalendarController::class, 'getDailyTasks']);
     Route::post('/task', [CalendarController::class, 'store']);
-    // TODO: Delete task
+    Route::post('/task/{id}/delete', [CalendarController::class, 'destroy']);
 });
 
 Route::group([
