@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('verify_tokens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained();
             $table->string('type'); // verify_account, reset_password
             $table->string('token');
             $table->boolean('is_done')->default(false);
