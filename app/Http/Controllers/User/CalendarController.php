@@ -120,7 +120,7 @@ class CalendarController extends Controller
             ], 400);
         }
 
-        // TODO: Delete task
+        // Get task
         $task = $request->user()->tasks()->find($id);
 
         if ($task == null) {
