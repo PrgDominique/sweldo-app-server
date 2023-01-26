@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Task;
 use App\Utils\ValidationUtil;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,13 +25,13 @@ class CalendarController extends Controller
         }
 
         $tasks = $request->user()->tasks()->whereBetween(
-            'created_at',
+            'task_date',
             [Carbon::createFromTimestamp($timestamp)->addDay(1)->startOfMonth(), Carbon::createFromTimestamp($timestamp)->addDay(1)->endOfMonth()]
         )->get();
 
         $taskList = [];
         foreach ($tasks as $task) {
-            $day = Carbon::parse($task->created_at)->rawFormat('d');
+            $day = Carbon::parse($task->task_date)->rawFormat('d');
             if (isset($taskList[$day])) {
                 $taskList[$day]++;
             } else {
@@ -56,7 +57,7 @@ class CalendarController extends Controller
         }
 
         // Get all task by date
-        $tasks = $request->user()->tasks()->whereDate('created_at', Carbon::createFromTimestamp($timestamp)->addDay(1)->toDateString())->get();
+        $tasks = $request->user()->tasks()->whereDate('task_date', Carbon::createFromTimestamp($timestamp)->addDay(1)->toDateString())->get();
         
         return response()->json([
             'tasks' => $tasks
@@ -65,7 +66,46 @@ class CalendarController extends Controller
 
     public function store(Request $request)
     {
-        // TODO: Create new task
+        $name = $request->name;
+        $description = $request->description;
+        $timestamp = $request->date;
+
+        // Validate name
+        $result = ValidationUtil::validateTaskName($name);
+        if ($result != null) {
+            return response()->json([
+                'message' => $result,
+                'type' => 'name'
+            ], 400);
+        }
+
+        // Validate description
+        $result = ValidationUtil::validateTaskDescription($description);
+        if ($result != null) {
+            return response()->json([
+                'message' => $result,
+                'type' => 'description'
+            ], 400);
+        }
+
+        // Validate date
+        $result = ValidationUtil::validateTimestamp($timestamp);
+        if ($result != null) {
+            return response()->json([
+                'message' => $result,
+            ], 400);
+        }
+
+        // Create new task
+        $request->user()->tasks()->create([
+            'name' => $name,
+            'description' => $description,
+            'task_date' => Carbon::createFromTimestamp($timestamp)->addDay(1)
+        ]);
+
+        return response()->json([
+            'message' => 'Task created successfully',
+        ]);
     }
 
     public function delete(Request $request)

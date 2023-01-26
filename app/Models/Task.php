@@ -12,7 +12,7 @@ class Task extends Model
     protected $fillable = [
         'name',
         'description',
-        'date',
+        'task_date',
     ];
 
     public function user()
