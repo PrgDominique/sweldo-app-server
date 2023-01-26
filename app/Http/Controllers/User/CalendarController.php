@@ -58,7 +58,7 @@ class CalendarController extends Controller
 
         // Get all task by date
         $tasks = $request->user()->tasks()->whereDate('task_date', Carbon::createFromTimestamp($timestamp)->addDay(1)->toDateString())->get();
-        
+
         return response()->json([
             'tasks' => $tasks
         ]);
@@ -108,8 +108,32 @@ class CalendarController extends Controller
         ]);
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
+        $id = $request->id;
+
+        // Validate id
+        $result = ValidationUtil::validateId($id);
+        if ($result != null) {
+            return response()->json([
+                'message' => $result,
+            ], 400);
+        }
+
         // TODO: Delete task
+        $task = $request->user()->tasks()->find($id);
+
+        if ($task == null) {
+            return response()->json([
+                'message' => 'Task not found',
+            ], 400);
+        }
+
+        // Delete
+        $task->delete();
+
+        return response()->json([
+            'message' => 'Task deleted successfully',
+        ]);
     }
 }
