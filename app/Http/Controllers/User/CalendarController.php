@@ -44,9 +44,9 @@ class CalendarController extends Controller
             ], 400);
         }
 
-        // Get all task by dates
-        $tasks = $request->user()->tasks()->where('date', Carbon::createFromTimestamp($timestamp)->addDay(1)->toDateString())->get();
-
+        // Get all task by date
+        $tasks = $request->user()->tasks()->whereDate('created_at', Carbon::createFromTimestamp($timestamp)->addDay(1)->toDateString())->get();
+        
         return response()->json([
             'tasks' => $tasks
         ]);
