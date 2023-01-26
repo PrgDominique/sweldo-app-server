@@ -49,7 +49,7 @@ Route::group([
 ], function () {
     Route::get('/task/monthly/{date}', [CalendarController::class, 'getMonthlyTasks']);
     Route::get('/task/daily/{date}', [CalendarController::class, 'getDailyTasks']);
-    Route::get('/task/daily', [CalendarController::class, 'store']);
+    Route::post('/task', [CalendarController::class, 'store']);
     // TODO: Delete task
 });
 
