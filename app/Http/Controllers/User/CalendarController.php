@@ -31,7 +31,7 @@ class CalendarController extends Controller
 
         $taskList = [];
         foreach ($tasks as $task) {
-            $day = Carbon::parse($task->task_date)->rawFormat('d');
+            $day = (int) Carbon::parse($task->task_date)->rawFormat('d');
             if (isset($taskList[$day])) {
                 $taskList[$day]++;
             } else {
