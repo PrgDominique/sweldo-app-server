@@ -47,11 +47,10 @@ Route::group([
         'auth:api',
     ]
 ], function () {
-    Route::get('/task', [CalendarController::class, 'index']);
-    Route::get('/task/{date}', [CalendarController::class, 'getTasks']);
+    Route::get('/task/monthly/{date}', [CalendarController::class, 'getMonthlyTasks']);
+    Route::get('/task/daily/{date}', [CalendarController::class, 'getDailyTasks']);
     // TODO: Create task
     // TODO: Delete task
-
 });
 
 Route::group([
