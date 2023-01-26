@@ -10,11 +10,22 @@ use Illuminate\Http\Request;
 class CalendarController extends Controller
 {
 
-    public function index(Request $request)
+    public function getMonthlyTasks(Request $request)
     {
+
+        $timestamp = $request->date;
+
+        // Validate date
+        $result = ValidationUtil::validateTimestamp($timestamp);
+        if ($result != null) {
+            return response()->json([
+                'message' => $result,
+            ], 400);
+        }
+
         $tasks = $request->user()->tasks()->whereBetween(
             'created_at',
-            [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]
+            [Carbon::createFromTimestamp($timestamp)->addDay(1)->startOfMonth(), Carbon::createFromTimestamp($timestamp)->addDay(1)->endOfMonth()]
         )->get();
 
         $taskList = [];
@@ -32,7 +43,7 @@ class CalendarController extends Controller
         ]);
     }
 
-    public function getTasks(Request $request)
+    public function getDailyTasks(Request $request)
     {
         $timestamp = $request->date;
 
