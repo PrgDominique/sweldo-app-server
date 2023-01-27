@@ -97,7 +97,7 @@ class CalendarController extends Controller
         }
 
         // Create new task
-        $request->user()->tasks()->create([
+        $newTask = $request->user()->tasks()->create([
             'name' => $name,
             'description' => $description,
             'task_date' => Carbon::createFromTimestamp($timestamp)->addDay(1)
@@ -105,6 +105,7 @@ class CalendarController extends Controller
 
         return response()->json([
             'message' => 'Task created successfully',
+            'task' => $newTask
         ]);
     }
 
