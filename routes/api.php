@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -73,4 +74,5 @@ Route::group([
     ]
 ], function () {
     Route::get('/', [AdminDashboardController::class, 'index']);
+    Route::get('/employee', [EmployeeController::class, 'index']);
 });
