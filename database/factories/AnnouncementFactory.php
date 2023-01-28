@@ -19,7 +19,7 @@ class AnnouncementFactory extends Factory
     {
         return [
   
-            'title' => fake()->title()
+            'title' => fake()->catchPhrase()
         ];
     }
 
