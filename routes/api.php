@@ -54,14 +54,7 @@ Route::group([
     Route::post('/task/{id}/delete', [CalendarController::class, 'destroy']);
 });
 
-Route::group([
-    'prefix' => '/my-sweldo',
-    'middleware' => [
-        'auth:api',
-    ]
-], function () {
-    Route::get('/', [MySweldoController::class, 'index']);
-});
+
 
 /*
     Admin routes
