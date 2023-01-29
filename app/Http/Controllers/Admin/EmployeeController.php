@@ -30,4 +30,27 @@ class EmployeeController extends Controller
             'normal' => $normal,
         ]);
     }
+
+    public function update(Request $request)
+    {
+        $id = $request->id;
+        $normal = $request->normal;
+
+        $employee = User::find($id);
+
+        if ($employee->rate == null) {
+            $employee->rate()->create([
+                'normal' => $normal,
+                'holiday' => 0, // not needed for now
+            ]);
+        } else {
+            $employee->rate()->update([
+                'normal' => $normal
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Updated employee successfully'
+        ]);
+    }
 }
