@@ -15,4 +15,19 @@ class EmployeeController extends Controller
             'employees' => $employees,
         ]);
     }
+
+    public function edit(Request $request)
+    {
+        $employee = User::find($request->id);
+
+        $normal = 0;
+
+        if ($employee->rate != null) {
+            $normal = $employee->rate->normal;
+        }
+
+        return response()->json([
+            'normal' => $normal,
+        ]);
+    }
 }

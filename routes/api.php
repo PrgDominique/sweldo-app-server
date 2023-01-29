@@ -68,4 +68,5 @@ Route::group([
 ], function () {
     Route::get('/', [AdminDashboardController::class, 'index']);
     Route::get('/employee', [EmployeeController::class, 'index']);
+    Route::get('/employee/{id}', [EmployeeController::class, 'edit']);
 });
