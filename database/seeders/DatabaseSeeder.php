@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'is_admin' => 1
         ]);
-        \App\Models\User::create([
+        $testacc = \App\Models\User::create([
             'first_name' => 'Test',
             'last_name' => 'Account',
             'email' => 'test@gmail.com',
@@ -32,5 +32,13 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::factory(100)->create();
         \App\Models\Announcement::factory(10)->create();
+
+        for($i = 0; $i<= 10; $i++){
+            $testacc->attendances()->create([
+                'clock_in' => now(),
+                'clock_out' => now()->addHour(5),
+            ]);
+        }
+        
     }
 }
