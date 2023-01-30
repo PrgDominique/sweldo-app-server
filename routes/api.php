@@ -66,8 +66,13 @@ Route::group([
         'admin'
     ]
 ], function () {
+
+    // Dashboard
     Route::get('/', [AdminDashboardController::class, 'index']);
+
+    // Employee
     Route::get('/employee', [EmployeeController::class, 'index']);
+    Route::get('/employee/find', [EmployeeController::class, 'find']);
     Route::get('/employee/{id}', [EmployeeController::class, 'edit']);
     Route::post('/employee/{id}', [EmployeeController::class, 'update']);
 });
