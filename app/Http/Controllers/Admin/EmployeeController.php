@@ -16,6 +16,17 @@ class EmployeeController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $employees = User::where('first_name', 'like', "%" . $request->name . "%")
+            ->orWhere('last_name', 'LIKE', "%" . $request->name . "%")
+            ->orWhere('email', 'LIKE', "%" . $request->name . "%")
+            ->paginate(10);
+        return response()->json([
+            'employees' => $employees,
+        ]);
+    }
+
     public function edit(Request $request)
     {
         $employee = User::find($request->id);
@@ -53,4 +64,6 @@ class EmployeeController extends Controller
             'message' => 'Updated employee successfully'
         ]);
     }
+
+    
 }
