@@ -55,6 +55,19 @@ Route::group([
 });
 
 
+// User Profile
+
+Route::group([
+    'prefix' => '/profile',
+    'middleware' => [
+        'auth:api',
+    ]
+], function () {
+    Route::get('/', [CalendarController::class, 'getProfile']);
+    Route::post('/', [CalendarController::class, 'updateProfile']);
+});
+
+
 
 /*
     Admin routes
