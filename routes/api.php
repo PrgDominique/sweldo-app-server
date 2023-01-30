@@ -10,6 +10,7 @@ use App\Http\Controllers\User\AnnouncementController;
 use App\Http\Controllers\User\AttendanceController;
 use App\Http\Controllers\User\CalendarController;
 use App\Http\Controllers\User\MySweldoController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Verify\VerifyAccountController;
 use Illuminate\Support\Facades\Route;
@@ -63,8 +64,8 @@ Route::group([
         'auth:api',
     ]
 ], function () {
-    Route::get('/', [CalendarController::class, 'getProfile']);
-    Route::post('/', [CalendarController::class, 'updateProfile']);
+    Route::get('/', [ProfileController::class, 'getProfile']);
+    Route::post('/', [ProfileController::class, 'updateProfile']);
 });
 
 
