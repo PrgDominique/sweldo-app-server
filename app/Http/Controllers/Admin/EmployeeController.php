@@ -10,18 +10,14 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $employees = User::where('is_admin', 0)->paginate(10);
-        return response()->json([
-            'employees' => $employees,
-        ]);
-    }
-
-    public function search(Request $request)
-    {
-        $employees = User::where('first_name', 'like', "%" . $request->name . "%")
+        if ($request->name == null) {
+            $employees = User::where('is_admin', 0)->paginate(10);
+        } else {
+            $employees = User::where('first_name', 'like', "%" . $request->name . "%")
             ->orWhere('last_name', 'LIKE', "%" . $request->name . "%")
             ->orWhere('email', 'LIKE', "%" . $request->name . "%")
             ->paginate(10);
+        }
         return response()->json([
             'employees' => $employees,
         ]);
