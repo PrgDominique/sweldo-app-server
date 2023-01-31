@@ -10,6 +10,7 @@ use App\Http\Controllers\User\AnnouncementController;
 use App\Http\Controllers\User\AttendanceController;
 use App\Http\Controllers\User\CalendarController;
 use App\Http\Controllers\User\MySweldoController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Verify\VerifyAccountController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,19 @@ Route::group([
     Route::get('/task/daily/{date}', [CalendarController::class, 'getDailyTasks']);
     Route::post('/task', [CalendarController::class, 'store']);
     Route::post('/task/{id}/delete', [CalendarController::class, 'destroy']);
+});
+
+
+// User Profile
+
+Route::group([
+    'prefix' => '/profile',
+    'middleware' => [
+        'auth:api',
+    ]
+], function () {
+    Route::get('/', [ProfileController::class, 'getProfile']);
+    Route::post('/', [ProfileController::class, 'updateProfile']);
 });
 
 
