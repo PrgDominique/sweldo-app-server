@@ -72,7 +72,6 @@ Route::group([
 
     // Employee
     Route::get('/employee', [EmployeeController::class, 'index']);
-    Route::get('/employee/search/{name}', [EmployeeController::class, 'search']);
     Route::get('/employee/{id}', [EmployeeController::class, 'edit']);
     Route::post('/employee/{id}', [EmployeeController::class, 'update']);
 });
